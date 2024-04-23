@@ -1,7 +1,7 @@
 import sqlalchemy as sa
 from flask import render_template, flash, url_for, redirect, request
 from app.forms import RegisterForm, LoginForm
-from app.models import Executor, Customer
+from app.models import User
 from app import app, db
 
 
@@ -15,8 +15,8 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        klass = Executor if request.form.get('executor') else Customer
-        query = sa.select(klass).where(klass.email==form.email.data)
+        klass_user = 'executor' if request.form.get('executor') else 'customer'
+        query = sa.select(User).where(User.email == form.email.data)
         user = db.session.scalar(query)
         if user is None or not user.check_password(form.password.data):
             flash('Неправильная почта или пароль')
@@ -29,12 +29,11 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        klass = Executor if request.form.get('executor') else Customer
-        user = klass(username=form.username.data, email=form.email.data)
+        klass_user = 'executor' if request.form.get('executor') else 'customer'
+        user = User(username=form.username.data, email=form.email.data, klass_user=klass_user)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Вы успешно зарегистрировались')
         return redirect(url_for('login'))
     return render_template('register.html', form=form, title='Регистрация')
-
