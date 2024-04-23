@@ -3,7 +3,16 @@
 
 {% block content %}
 <h1>Регистрация</h1>
-<form action="">
+<h3>Зарегистрироваться как</h3>
+<form action="" method="post">
+        <div>
+  <input type="checkbox" name="executor" id="executor" value="executor" checked>
+  <label for="executor">Исполнитель</label>
+
+  <input type="checkbox" name="customer" id="customer" value="customer">
+  <label for="customer">Заказчик</label>
+
+    </div>
     {{ form.hidden_tag() }}
     <p>
         {{ form.username.label }}<br>
