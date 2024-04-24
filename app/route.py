@@ -21,7 +21,7 @@ def login():
         if user is None or not user.check_password(form.password.data) or klass_user != user.klass_user:
             flash('Неправильная почта или пароль')
             return redirect(url_for('login'))
-        return redirect(url_for(klass_user))
+        return redirect(url_for(klass_user, username=user.email))
     return render_template('login.html', form=form, title='Вход')
 
 
@@ -29,6 +29,7 @@ def login():
 def logout():
     db.session.close()
     return redirect(url_for('login'))
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -44,11 +45,13 @@ def register():
     return render_template('register.html', form=form, title='Регистрация')
 
 
-@app.route('/user/executor')
-def executor():
-    return render_template('executor.html')
+@app.route('/user/executor/<username>')
+def executor(username):
+    user = db.session.scalar(sa.select(User).where(User.email == username))
+    return render_template('executor.html', user=user)
 
 
-@app.route('/user/customer')
-def customer():
-    return render_template('customer.html')
+@app.route('/user/customer/<username>')
+def customer(username):
+    user = db.session.scalar(sa.select(User).where(User.username == username))
+    return render_template('customer.html', user=user)
