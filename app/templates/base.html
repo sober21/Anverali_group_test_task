@@ -8,7 +8,15 @@
 <body>
 <a href="{{ url_for('index') }}">Главная</a>
 <a href="{{ url_for('login') }}">Вход</a>
-<a href="{{ url_for('register') }}">Регистрация</a><br>
+<a href="{{ url_for('register') }}">Регистрация</a>
+<a href="{{ url_for('logout') }}">Выход</a><br>
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
 {% block content %}
 {% endblock content %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
