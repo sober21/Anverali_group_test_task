@@ -10,6 +10,7 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
+    username = StringField('Имя пользователя', validators=[DataRequired()])
     email = EmailField('Электронная почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     retry_password = StringField('Повторите пароль', validators=[DataRequired(), EqualTo('password')])
