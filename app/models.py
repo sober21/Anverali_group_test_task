@@ -7,7 +7,8 @@ from app import db, login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return db.session.get(User, int(user_id))
+
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(sa.Integer, primary_key=True)
