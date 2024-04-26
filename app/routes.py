@@ -6,7 +6,7 @@ from app.forms import RegisterForm, LoginForm, EditProfileForm
 from app.models import User
 from app import app, db
 
-main_bp = Blueprint('main_blueprint', __name__)
+main_bp = Blueprint('main', __name__)
 
 
 @app.route('/')
