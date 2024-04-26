@@ -1,11 +1,12 @@
-from urllib.parse import urlsplit
-
 import sqlalchemy as sa
-from flask import render_template, flash, url_for, redirect, request
+from flask import render_template, flash, url_for, redirect, request, Blueprint
 from flask_login import current_user, login_user, logout_user, login_required
+from urllib.parse import urlsplit
 from app.forms import RegisterForm, LoginForm, EditProfileForm
 from app.models import User
 from app import app, db
+
+main_bp = Blueprint('main_blueprint', __name__)
 
 
 @app.route('/')
