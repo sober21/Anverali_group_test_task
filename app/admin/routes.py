@@ -1,5 +1,4 @@
-import sqlalchemy as sa
-from flask import render_template, flash, url_for, redirect, request, Blueprint
+from flask import render_template, Blueprint
 
 
 admin_bp = Blueprint('admin_bp', __name__)
