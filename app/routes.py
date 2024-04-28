@@ -20,7 +20,8 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        klass_user = 'executor' if request.form.get('executor') else 'customer'
+        klass_user = 'executor' if request.form.get('executor') else \
+            ('customer' if request.form.get('executor') else 'admin')
         query = sa.select(User).where(User.email == form.email.data)
         user = db.session.scalar(query)
         if user is None or not user.check_password(form.password.data) or klass_user != user.klass_user:
@@ -94,3 +95,8 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', form=form, title='Профилье')
+
+
+@app.route('/404')
+def error_404():
+    return render_template('404.html')

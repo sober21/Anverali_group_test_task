@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     klass_user: so.Mapped[str] = so.mapped_column(sa.String(15))
     hash_password: so.Mapped[None | str] = so.mapped_column(sa.String(256))
     about_me: so.Mapped[None | str] = so.mapped_column(sa.String(512))
+    is_admin: so.Mapped[None | bool] = so.mapped_column(sa.Boolean, default=False)
 
     def set_password(self, password):
         self.hash_password = generate_password_hash(password)
