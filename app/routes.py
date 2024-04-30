@@ -20,6 +20,7 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
+
         klass_user = 'executor' if request.form.get('executor') else \
             ('customer' if request.form.get('customer') else 'admin')
         query = sa.select(User).where(User.email == form.email.data)
@@ -64,7 +65,7 @@ def register():
 
 @app.route('/user/<username>')
 def user(username):
-    user = db.session.scalar(sa.select(User).where(User.username == username))
+    user = db.first_or_404(sa.select(User).where(User.username == username))
     klass_user = user.klass_user
     return render_template(f'{klass_user}.html', user=user)
 

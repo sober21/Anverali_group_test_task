@@ -17,7 +17,7 @@ class ModelUserTests(TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_set_password(self):
+    def test_check_password(self):
         user = User(username='Maxim', email='max@mail.ru', klass_user='executor')
         user.set_password('111')
         self.assertTrue(user.check_password('111'))
