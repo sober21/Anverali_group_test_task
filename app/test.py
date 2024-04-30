@@ -1,9 +1,9 @@
 import os
+
+os.environ['DATABASE_URL'] = 'sqlite://'
 from unittest import TestCase, main
 from app import app, db
 from app.models import User
-
-os.environ['DATABASE_URL'] = 'sqlite://'
 
 
 class ModelUserTests(TestCase):

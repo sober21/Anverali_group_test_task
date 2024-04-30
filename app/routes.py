@@ -21,7 +21,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         klass_user = 'executor' if request.form.get('executor') else \
-            ('customer' if request.form.get('executor') else 'admin')
+            ('customer' if request.form.get('customer') else 'admin')
         query = sa.select(User).where(User.email == form.email.data)
         user = db.session.scalar(query)
         if user is None or not user.check_password(form.password.data) or klass_user != user.klass_user:
