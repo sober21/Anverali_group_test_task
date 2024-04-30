@@ -97,6 +97,12 @@ def edit_profile():
     return render_template('edit_profile.html', form=form, title='Профилье')
 
 
-@app.route('/404')
-def error_404():
-    return render_template('404.html')
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500
